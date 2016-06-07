@@ -5,7 +5,15 @@ CONFIG -= qt
 
 LIBS += -luv
 
-SOURCES += main.c
+debug {
+    DEFINES += _DDEBUG
+    DEFINES +=
+}
+
+SOURCES += main.c \
+    test-poll.c \
+    utility.c
 
 HEADERS += \
-    trader.h
+    trader.h \
+    utility.h
