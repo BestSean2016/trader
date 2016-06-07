@@ -1,6 +1,23 @@
 #include "utility.h"
 #include "trader.h"
 
+static void delay_timer_cb(uv_timer_t *timer) {
+  connection_context_t *context = (connection_context_t *)timer->data;
+  int r;
+
+  /* Timer should auto stop. */
+  ASSERT(0 == uv_is_active((uv_handle_t *)timer));
+
+  /* Add the requested events to the poll mask. */
+  ASSERT(context->delayed_events != 0);
+  context->events |= context->delayed_events;
+  context->delayed_events = 0;
+
+  r = uv_poll_start(&context->poll_handle, context->events, conn_poll_cb);
+  ASSERT(r == 0);
+}
+
+
 
 void test_connection_poll_cb(uv_poll_t *handle, int status, int events) {
   connection_context_t *context = (connection_context_t *)handle->data;
@@ -75,8 +92,8 @@ void test_connection_poll_cb(uv_poll_t *handle, int status, int events) {
 
     case 6:
       /* Fudge with the event mask. */
-      uv_poll_start(&context->poll_handle, UV_WRITABLE, connection_poll_cb);
-      uv_poll_start(&context->poll_handle, UV_READABLE, connection_poll_cb);
+      uv_poll_start(&context->poll_handle, UV_WRITABLE, test_connection_poll_cb);
+      uv_poll_start(&context->poll_handle, UV_READABLE, test_connection_poll_cb);
       context->events = UV_READABLE;
       break;
 
@@ -165,8 +182,8 @@ void test_connection_poll_cb(uv_poll_t *handle, int status, int events) {
 
       case 6:
         /* Fudge with the event mask. */
-        uv_poll_start(&context->poll_handle, UV_READABLE, connection_poll_cb);
-        uv_poll_start(&context->poll_handle, UV_WRITABLE, connection_poll_cb);
+        uv_poll_start(&context->poll_handle, UV_READABLE, test_connection_poll_cb);
+        uv_poll_start(&context->poll_handle, UV_WRITABLE, test_connection_poll_cb);
         context->events = UV_WRITABLE;
         break;
 
@@ -198,7 +215,7 @@ void test_connection_poll_cb(uv_poll_t *handle, int status, int events) {
   } else if (new_events != context->events) {
     /* Poll mask changed. Call uv_poll_start again. */
     context->events = new_events;
-    uv_poll_start(handle, new_events, connection_poll_cb);
+    uv_poll_start(handle, new_events, test_connection_poll_cb);
   }
 
   /* Assert that uv_is_active works correctly for poll handles. */

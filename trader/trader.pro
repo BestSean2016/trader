@@ -5,13 +5,7 @@ CONFIG -= qt
 
 LIBS += -luv
 
-debug {
-    DEFINES += _DDEBUG
-    DEFINES +=
-}
-
 SOURCES += main.c \
-    test-poll.c \
     utility.c
 
 HEADERS += \
