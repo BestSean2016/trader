@@ -6,8 +6,8 @@ int mongo_init(const char *host, const short port, const char *dbname,
                const char *collection) {
   memset(&mongocnf, 0, sizeof(mongocnf));
   snprintf(mongocnf.url, sizeof(mongocnf.url), "mongodb://%s:%d", host, port);
-  snprintf(mongocnf.dbname, sizeof(mongocnf.dbname), dbname);
-  snprintf(mongocnf.collection, sizeof(mongocnf.collection), collection);
+  snprintf(mongocnf.dbname, sizeof(mongocnf.dbname), "%s", dbname);
+  snprintf(mongocnf.collection, sizeof(mongocnf.collection), "%s", collection);
 
   mongoc_init();
 

@@ -10,9 +10,11 @@ INCLUDEPATH += /usr/include/libbson-1.0
 
 SOURCES += main.c \
     utility.c \
-    mongo.c
+    mongo.c \
+    ctp-api.cpp
 
 HEADERS += \
     trader.h \
     utility.h \
-    mongo.h
+    mongo.h \
+    ctp-api.h
