@@ -18,3 +18,7 @@ HEADERS += \
     utility.h \
     mongo.h \
     ctp-api.h
+
+DISTFILES += \
+    trader.json \
+    datatype_desc.json

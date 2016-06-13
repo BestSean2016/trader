@@ -1,10 +1,10 @@
 #ifndef __CTP_API_TDIF_DEAL_H__
 #define __CTP_API_TDIF_DEAL_H__
 
-#include <ThostFtdcMdApi.h>
-#include <ThostFtdcTraderApi.h>
 #include <ThostFtdcUserApiDataType.h>
 #include <ThostFtdcUserApiStruct.h>
+#include <ThostFtdcMdApi.h>
+#include <ThostFtdcTraderApi.h>
 
 class MdSpi : public CThostFtdcMdSpi {
 public:

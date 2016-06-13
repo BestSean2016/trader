@@ -1,0 +1,18 @@
+ReqUserLogin {
+    TradingDay: {
+        type: "TFtdcDateType",
+        def:"typedef char TThostFtdcDateType[9];",
+        "///是一个日期类型
+/////////////////////////////////////////////////////////////////////////
+
+",
+    BrokerID: "12345",
+    UserID: "666666",
+    Password: "password",
+    UserProductInfo: "cpt",
+    InterfaceProductInfo:123,
+    ProtocolInfo:udp,
+    MacAddress:01-02-03-04-05-06,
+    OneTimePassword:,
+    ClientIPAddress:192.168.1.100
+}
